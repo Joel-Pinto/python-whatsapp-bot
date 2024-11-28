@@ -1,5 +1,6 @@
 import json
-from dotenv import load_dotenv
+import sys
+from dotenv import find_dotenv, load_dotenv
 import os
 import requests
 import aiohttp
@@ -9,7 +10,7 @@ import asyncio
 # Load environment variables
 # --------------------------------------------------------------
 
-load_dotenv()
+load_dotenv(f'{os.getcwd()}/.env') 
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
@@ -65,13 +66,13 @@ def get_text_message_input(recipient, text):
 
 def send_message(data):
     headers = {
+        "Authorization": "Bearer " + ACCESS_TOKEN,
         "Content-type": "application/json",
-        "Authorization": f"Bearer {ACCESS_TOKEN}",
     }
 
     url = f"https://graph.facebook.com/{VERSION}/{PHONE_NUMBER_ID}/messages"
 
-    response = requests.post(url, data=data, headers=headers)
+    response = requests.post(url, headers=headers, json=data)
     if response.status_code == 200:
         print("Status:", response.status_code)
         print("Content-type:", response.headers["content-type"])

@@ -27,16 +27,16 @@ def handle_message():
         response: A tuple containing a JSON response and an HTTP status code.
     """
     body = request.get_json()
-    # logging.info(f"request body: {body}")
+    
+    #logging.info(f"request body: {body}")
 
     # Check if it's a WhatsApp status update
     if (
         body.get("entry", [{}])[0]
         .get("changes", [{}])[0]
         .get("value", {})
-        .get("statuses")
+        .get("field")
     ):
-        logging.info("Received a WhatsApp status update.")
         return jsonify({"status": "ok"}), 200
 
     try:

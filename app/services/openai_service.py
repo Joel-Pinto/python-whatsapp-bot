@@ -5,7 +5,7 @@ import os
 import time
 import logging
 
-load_dotenv()
+load_dotenv(f'{os.getcwd()}/.env') 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_ASSISTANT_ID = os.getenv("OPENAI_ASSISTANT_ID")
 client = OpenAI(api_key=OPENAI_API_KEY)
